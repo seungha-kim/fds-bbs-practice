@@ -207,7 +207,7 @@ async function drawNewPostForm() {
     drawPostList()
   })
   backEl.addEventListener('click', e => {
-    e.preventdefault()
+    e.preventDefault()
     drawPostList()
   })
 
