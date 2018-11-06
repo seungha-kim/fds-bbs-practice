@@ -113,6 +113,7 @@ async function drawPostDetail(postId) {
   const bodyEl = frag.querySelector('.body')
   const backEl = frag.querySelector('.back')
   const commentListEl = frag.querySelector('.comment-list')
+  const commentFormEl = frag.querySelector('.comment-form')
 
   // 3. 필요한 데이터 불러오기
   const {data: {title, body, user, comments}} = await api.get('/posts/' + postId, {
@@ -137,6 +138,8 @@ async function drawPostDetail(postId) {
   titleEl.textContent = title
   bodyEl.textContent = body
   authorEl.textContent = user.username
+
+  console.log(comments)
   // 댓글 표시
   for (const commentItem of comments) {
     // 1. 템플릿 복사
@@ -162,6 +165,15 @@ async function drawPostDetail(postId) {
   // 5. 이벤트 리스너 등록하기
   backEl.addEventListener('click', e => {
     drawPostList()
+  })
+
+  commentFormEl.addEventListener('submit', async e => {
+    e.preventDefault()
+    const body = e.target.elements.body.value
+    await api.post(`/posts/${postId}/comments`, {
+      body
+    })
+    drawPostDetail(postId)
   })
 
   // 6. 템플릿을 문서에 삽입
