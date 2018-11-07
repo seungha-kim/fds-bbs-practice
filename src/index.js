@@ -185,7 +185,8 @@ async function drawPostDetail(postId) {
   commentFormEl.addEventListener('submit', async e => {
     e.preventDefault()
     const body = e.target.elements.body.value
-    await api.post(`/posts/${postId}/comments`, {
+    await api.post(`/comments`, {
+      postId,
       body
     })
     drawPostDetail(postId)
